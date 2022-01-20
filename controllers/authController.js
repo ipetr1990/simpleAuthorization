@@ -25,9 +25,10 @@ class AuthController {
             res.status(500).json(e.message);
         }
     }
-    getUsers (req, res) {
+    async getUsers (req, res) {
         try {
-
+            const users = await authService.getUsers();
+            res.json(users);
         } catch (e) {
             res.status(500).json(e.message);
         }

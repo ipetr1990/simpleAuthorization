@@ -19,6 +19,10 @@ class AuthService {
         const token = this.generateAccessToken(user._id, user.roles);
         return token;
     }
+    async getUsers() {
+        const users = await User.find();
+        return users;
+    }
 
     generateAccessToken(id, roles) {
         const payload = {id, roles};
