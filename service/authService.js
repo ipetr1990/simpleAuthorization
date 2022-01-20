@@ -19,9 +19,9 @@ class AuthService {
         const token = this.generateAccessToken(user._id, user.roles);
         return token;
     }
+
     generateAccessToken(id, roles) {
-        const payload = {id,roles}
-        return jwt.sign(payload, config.secret, {expiresIn: "24h"})
+
     }
 }
 
