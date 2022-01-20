@@ -19,8 +19,8 @@ class AuthController {
             const errors = validationResult(req);
             const {username, password} = req.body;
             if(!errors.isEmpty()) res.status(400).json('registration error', ...errors);
-            await authService.login(username, password);
-            res.json({message: `access allowed`})
+            const token = await authService.login(username, password);
+            res.json({token})
         } catch (e) {
             res.status(500).json(e.message);
         }

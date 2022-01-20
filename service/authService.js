@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import bcryptjs from 'bcryptjs';
-import {validationResult} from "express-validator";
+import jwt from 'jsonwebtoken';
+import config from '../config.js'
 
 class AuthService {
     async registration (username, password) {
@@ -15,6 +16,12 @@ class AuthService {
         if(!user) throw new Error(`user ${username} is not found`);
         const isPasswordValid = bcryptjs.compareSync(hashPassword, user.password);
         if(!isPasswordValid) throw new Error(`invalid password`);
+        const token = this.generateAccessToken(user._id, user.roles);
+        return token;
+    }
+    generateAccessToken(id, roles) {
+        const payload = {id,roles}
+        return jwt.sign(payload, config.secret, {expiresIn: "24h"})
     }
 }
 
