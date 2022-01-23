@@ -6,7 +6,7 @@ class AuthController {
     async registration (req, res) {
         try {
             const errors = validationResult(req);
-            if(!errors.isEmpty()) return res.status(400).json('registration error', ...errors)
+            if(!errors.isEmpty()) return res.status(400).json(errors);
             const {username, password} = req.body;
             const newUsername = await authService.registration(username, password);
             res.json({message:`user ${newUsername} successfully registered`});
@@ -18,7 +18,7 @@ class AuthController {
         try {
             const errors = validationResult(req);
             const {username, password} = req.body;
-            if(!errors.isEmpty()) res.status(400).json('registration error', ...errors);
+            if(!errors.isEmpty()) return res.status(400).json(errors);
             const token = await authService.login(username, password);
             res.json({token})
         } catch (e) {

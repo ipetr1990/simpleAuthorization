@@ -6,7 +6,7 @@ import config from '../config.js'
 class AuthService {
     async registration (username, password) {
         const candidate = await User.findOne({username});
-        if(!candidate) throw new Error(`user ${username} has already exists`);
+        if(candidate) throw new Error(`user ${username} has already exists`);
         const hashPassword = bcryptjs.hashSync(password, 7);
         const user = await User.create({username, password:hashPassword});
         return user.username;
